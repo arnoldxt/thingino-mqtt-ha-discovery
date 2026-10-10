@@ -51,6 +51,26 @@ curl -o /usr/sbin/thingino-ha-discovery.sh https://raw.githubusercontent.com/AsD
   && chmod +x /etc/init.d/S99ha-discovery
 ```
 
+or with SSH:
+
+```sh
+curl -o /usr/sbin/thingino-ha-discovery.sh https://raw.githubusercontent.com/AsDinFlames/thingino-mqtt-ha-discovery/main/thingino-ha-discovery.sh \
+  && chmod +x /usr/sbin/thingino-ha-discovery.sh -s \
+  && /usr/sbin/thingino-ha-discovery.sh \
+  && printf '#!/bin/sh\ncase "$1" in\n  start) sleep 10 && /usr/sbin/thingino-ha-discovery.sh &;;\nesac\n' > /etc/init.d/S99ha-discovery \
+  && chmod +x /etc/init.d/S99ha-discovery
+```
+
+or with insecure SSH:
+
+```sh
+curl -o /usr/sbin/thingino-ha-discovery.sh https://raw.githubusercontent.com/AsDinFlames/thingino-mqtt-ha-discovery/main/thingino-ha-discovery.sh \
+  && chmod +x /usr/sbin/thingino-ha-discovery.sh -s -k \
+  && /usr/sbin/thingino-ha-discovery.sh \
+  && printf '#!/bin/sh\ncase "$1" in\n  start) sleep 10 && /usr/sbin/thingino-ha-discovery.sh &;;\nesac\n' > /etc/init.d/S99ha-discovery \
+  && chmod +x /etc/init.d/S99ha-discovery
+```
+
 That's it. All entities will appear in Home Assistant automatically and re-register on every boot.
 
 To re-run discovery manually at any time:
